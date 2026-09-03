@@ -13,7 +13,7 @@ scripts/generate-file-pages.sh     Generates directory pages
 layouts/partials/directory-browser.html  Directory browser listing
 layouts/shortcodes/directory-browser.html Directory browser shortcode
 layouts/partials/header.html           Top-level navigation
-layouts/partials/footer.html           Back-to-top footer only
+layouts/partials/footer.html           Configurable static footer text
 static/files/                      Download files
 themes/accessible-minimalism/      Theme Git submodule
 .github/workflows/hugo-pages.yml   GitHub Pages fallback deployment
@@ -56,9 +56,14 @@ No `index.md` file is needed in any download directory. The `scripts/hugo.sh` wr
 
 The file browser is available at `/files/`. Each directory has its own page with clickable subdirectories, breadcrumb navigation, and a `../` link to the parent directory. Directory URLs preserve the exact case and characters used below `static/files/`.
 
-The main navigation is displayed at the top of every page and contains links to `Hlavná stránka` and `Prehliadač súborov`. The old bottom `Site menu` has been removed.
+The main navigation is displayed at the top of every page and contains links to `Hlavná stránka` and `Prehliadač súborov`. The old bottom `Site menu` has been removed. The independent `Späť hore` link is displayed above the footer.
 
-The navigation is defined in `hugo.toml` and rendered by `layouts/partials/header.html`. The project overrides the theme footer with `layouts/partials/footer.html`; it must not contain the old `Site menu` or `#nav-menu` anchor.
+The navigation is defined in `hugo.toml` and rendered by `layouts/partials/header.html`. The project overrides the theme footer with `layouts/partials/footer.html`; it must not contain the old `Site menu` or `#nav-menu` anchor. The footer and the independent `Späť hore` link are centered on every page, including the file browser. Change the static footer text in `hugo.toml` under `params.footer.text`:
+
+```toml
+[params.footer]
+  text = "© 2026 Downloads"
+```
 
 The resulting direct links are:
 

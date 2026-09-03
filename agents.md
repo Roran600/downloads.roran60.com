@@ -48,6 +48,8 @@ Prefer URL-friendly names using letters, numbers, `.`, `-`, and `_`. Renaming or
 - The main navigation is rendered at the top of every page by `layouts/partials/header.html`.
 - It must contain links to the homepage (`/`) and file browser (`/files/`).
 - The navigation labels are configured in the `menu.main` entries in `hugo.toml`.
+- The static footer text is configured as `params.footer.text` in `hugo.toml` and rendered by `layouts/partials/footer.html` on every page, including the file browser.
+- The independent `Späť hore` link is rendered above the footer by `layouts/_default/baseof.html` and must remain outside the `<footer>` element.
 - The project footer override in `layouts/partials/footer.html` must not restore the theme's bottom `Site menu` or the obsolete `#nav-menu` jump link.
 - Keep the navigation accessible with a labeled `<nav>` element and semantic list items.
 
@@ -60,6 +62,7 @@ Prefer URL-friendly names using letters, numbers, `.`, `-`, and `_`. Renaming or
 - Links are built from the relative path and point to `/files/...`.
 - `disablePathToLower = true` preserves the case of directory URLs.
 - Any template change must keep the existing theme layout and accessible semantic HTML intact.
+- Keep the footer and `Späť hore` link centered through the project styles in `layouts/partials/style.html`.
 
 ## Deployment
 

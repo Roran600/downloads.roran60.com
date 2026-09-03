@@ -9,6 +9,9 @@ enableRobotsTXT = true
 [params]
   description = "Súbory na stiahnutie"
 
+  [params.footer]
+    text = "© 2026 Downloads"
+
 [languages.sk]
   label = "Slovenčina"
   locale = "sk"
