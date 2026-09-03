@@ -15,6 +15,10 @@ enableRobotsTXT = true
 
 [menu]
   [[menu.main]]
-    name = "Domov"
+    name = "Hlavná stránka"
     url = "/"
     weight = 1
+  [[menu.main]]
+    name = "Prehliadač súborov"
+    url = "/files/"
+    weight = 2

@@ -1,0 +1,11 @@
+<header class="site-header">
+  <nav aria-label="Hlavná navigácia">
+    <ul class="main-navigation">
+      {{ range .Site.Menus.main }}
+        <li>
+          <a href="{{ .URL | relURL }}">{{ .Name }}</a>
+        </li>
+      {{ end }}
+    </ul>
+  </nav>
+</header>

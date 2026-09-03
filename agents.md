@@ -43,6 +43,14 @@ Prefer URL-friendly names using letters, numbers, `.`, `-`, and `_`. Renaming or
 - Never edit generated pages under `content/files/` manually; the build wrapper recreates them from `static/files/`.
 - Do not add a CMS, database, login, or client-side editor for homepage editing; local Git-based editing is intentional.
 
+## Main navigation
+
+- The main navigation is rendered at the top of every page by `layouts/partials/header.html`.
+- It must contain links to the homepage (`/`) and file browser (`/files/`).
+- The navigation labels are configured in the `menu.main` entries in `hugo.toml`.
+- The project footer override in `layouts/partials/footer.html` must not restore the theme's bottom `Site menu` or the obsolete `#nav-menu` jump link.
+- Keep the navigation accessible with a labeled `<nav>` element and semantic list items.
+
 ## Hugo implementation
 
 - `scripts/generate-file-pages.sh` creates ignored Hugo section pages from `static/files/` before each build.

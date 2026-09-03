@@ -12,6 +12,8 @@ scripts/hugo.sh                    Generates directory pages and runs Hugo
 scripts/generate-file-pages.sh     Generates directory pages
 layouts/partials/directory-browser.html  Directory browser listing
 layouts/shortcodes/directory-browser.html Directory browser shortcode
+layouts/partials/header.html           Top-level navigation
+layouts/partials/footer.html           Back-to-top footer only
 static/files/                      Download files
 themes/accessible-minimalism/      Theme Git submodule
 .github/workflows/hugo-pages.yml   GitHub Pages fallback deployment
@@ -53,6 +55,10 @@ static/files/
 No `index.md` file is needed in any download directory. The `scripts/hugo.sh` wrapper automatically regenerates the ignored Hugo pages in `content/files/` from `static/files/` before every Hugo command. Hugo then copies the files to `public/files/` with the same directory structure.
 
 The file browser is available at `/files/`. Each directory has its own page with clickable subdirectories, breadcrumb navigation, and a `../` link to the parent directory. Directory URLs preserve the exact case and characters used below `static/files/`.
+
+The main navigation is displayed at the top of every page and contains links to `Hlavná stránka` and `Prehliadač súborov`. The old bottom `Site menu` has been removed.
+
+The navigation is defined in `hugo.toml` and rendered by `layouts/partials/header.html`. The project overrides the theme footer with `layouts/partials/footer.html`; it must not contain the old `Site menu` or `#nav-menu` anchor.
 
 The resulting direct links are:
 
