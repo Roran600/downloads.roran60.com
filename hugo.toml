@@ -3,6 +3,7 @@ defaultContentLanguage = "sk"
 title = "Downloads"
 theme = "accessible-minimalism"
 disableHugoGeneratorInject = true
+disablePathToLower = true
 enableRobotsTXT = true
 
 [params]

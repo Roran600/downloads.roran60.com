@@ -8,8 +8,10 @@ The site uses the [Accessible Minimalism](https://github.com/leonstafford/access
 
 ```text
 content/_index.md                  Home page content
-layouts/partials/file-tree.html    Recursive file listing
-layouts/shortcodes/file-tree.html  File listing shortcode
+scripts/hugo.sh                    Generates directory pages and runs Hugo
+scripts/generate-file-pages.sh     Generates directory pages
+layouts/partials/directory-browser.html  Directory browser listing
+layouts/shortcodes/directory-browser.html Directory browser shortcode
 static/files/                      Download files
 themes/accessible-minimalism/      Theme Git submodule
 .github/workflows/hugo-pages.yml   GitHub Pages fallback deployment
@@ -28,7 +30,9 @@ static/files/
     └── installer.exe
 ```
 
-No `index.md` file is needed in any download directory. Hugo recursively lists the files on the home page and copies them to `public/files/` with the same directory structure.
+No `index.md` file is needed in any download directory. The `scripts/hugo.sh` wrapper automatically regenerates the ignored Hugo pages in `content/files/` from `static/files/` before every Hugo command. Hugo then copies the files to `public/files/` with the same directory structure.
+
+The file browser is available at `/files/`. Each directory has its own page with clickable subdirectories, breadcrumb navigation, and a `../` link to the parent directory. Directory URLs preserve the exact case and characters used below `static/files/`.
 
 The resulting direct links are:
 
@@ -45,13 +49,13 @@ The `public/` directory is build output and must not be committed.
 ## Local development
 
 ```bash
-hugo server
+./scripts/hugo.sh server
 ```
 
 Build a clean production output:
 
 ```bash
-hugo build --gc --minify --cleanDestinationDir
+./scripts/hugo.sh build --gc --minify --cleanDestinationDir
 ```
 
 The generated `public/` directory is ignored by Git.
@@ -68,7 +72,7 @@ Create a Pages project from this GitHub repository with these settings:
 
 ```text
 Production branch: main
-Build command: hugo --gc --minify
+Build command: ./scripts/hugo.sh --gc --minify
 Build directory: public
 ```
 
@@ -94,7 +98,8 @@ The workflow is independent of Cloudflare Pages and is triggered by pushes to `m
 
 ## Important limitations
 
-- The file tree is generated at build time. A newly added file appears in the index after the next deployment.
+- The directory browser is generated at build time. A newly added, moved, or deleted file or directory appears correctly after the next build or deployment.
+- `content/files/` is generated automatically and must not be edited manually. It is ignored by Git and recreated from `static/files/` on every Hugo command using `scripts/hugo.sh`.
 - Hugo and static hosting do not provide an upload interface. Files must be added to Git and pushed, or supplied through a separate storage workflow.
 - Large binaries should use Git LFS, Cloudflare R2, or another object-storage service instead of ordinary Git history.
 - The same custom domain must not be configured as production on both Cloudflare Pages and GitHub Pages at the same time.

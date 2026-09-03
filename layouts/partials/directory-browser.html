@@ -1,0 +1,61 @@
+{{- $relative := .relative -}}
+{{- $source := path.Join "static/files" $relative -}}
+{{- $parent := "" -}}
+{{- if $relative -}}
+  {{- $parts := split $relative "/" -}}
+  {{- if gt (len $parts) 1 -}}
+    {{- $parent = delimit (first (sub (len $parts) 1) $parts) "/" -}}
+  {{- end -}}
+{{- end -}}
+
+<nav class="file-breadcrumbs" aria-label="Breadcrumb">
+  <a href="{{ "/files/" | relURL }}">Files</a>
+  {{- $breadcrumbPath := "" -}}
+  {{- range $part := split $relative "/" -}}
+    {{- if $part -}}
+      {{- if $breadcrumbPath -}}{{ " / " }}{{ end -}}
+      {{- $breadcrumbPath = path.Join $breadcrumbPath $part -}}
+      <a href="{{ printf "/files/%s/" $breadcrumbPath | relURL }}">{{ $part }}</a>
+    {{- end -}}
+  {{- end -}}
+</nav>
+
+<table class="file-list">
+  <caption class="visually-hidden">Files in {{ if $relative }}{{ $relative }}{{ else }}the root directory{{ end }}</caption>
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Size</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{- if $relative -}}
+      <tr>
+        <td colspan="2"><a class="directory-link parent-link" href="{{ if $parent }}{{ printf "/files/%s/" $parent | relURL }}{{ else }}{{ "/files/" | relURL }}{{ end }}">../</a></td>
+      </tr>
+    {{- end -}}
+    {{- with os.ReadDir $source -}}
+      {{- range . -}}
+        {{- $name := .Name -}}
+        {{- if and .IsDir (not (hasPrefix $name ".")) -}}
+          {{- $child := $name -}}
+          {{- if $relative }}{{ $child = path.Join $relative $name }}{{ end -}}
+          <tr>
+            <td><a class="directory-link" href="{{ printf "/files/%s/" $child | relURL }}">{{ $name }}/</a></td>
+            <td>—</td>
+          </tr>
+        {{- end -}}
+      {{- end -}}
+      {{- range . -}}
+        {{- $name := .Name -}}
+        {{- if and (not .IsDir) (not (hasPrefix $name ".")) -}}
+          {{- $file := path.Join "/files" $relative $name -}}
+          <tr>
+            <td><a href="{{ $file | relURL }}">{{ $name }}</a></td>
+            <td>{{ .Size }} B</td>
+          </tr>
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  </tbody>
+</table>

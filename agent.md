@@ -10,7 +10,7 @@ Cloudflare Pages is the primary deployment target. The GitHub Pages workflow is 
 - Keep the Accessible Minimalism theme in `themes/accessible-minimalism/` as a Git submodule.
 - Keep downloadable files below `static/files/`.
 - Preserve the filesystem path below `static/files/` in the published URL below `/files/`.
-- Keep recursive file listing working without `index.md` files in download directories.
+- Keep the directory browser working without `index.md` files in download directories.
 - Do not add an upload service, JavaScript application, database, or server-side dependency for the download index.
 - Do not list hidden files or directories whose names start with `.`.
 - Do not commit `public/` or `resources/`.
@@ -29,16 +29,18 @@ The direct URL is:
 https://downloads.roran60.com/files/<directory>/<filename>
 ```
 
-Do not create `index.md` files in download directories. Do not manually duplicate download links in `content/_index.md`; the `file-tree` shortcode generates them.
+Do not create `index.md` files in download directories. Do not manually duplicate download links in `content/_index.md`; `scripts/hugo.sh` generates the directory pages automatically from `static/files/`.
 
 Prefer URL-friendly names using letters, numbers, `.`, `-`, and `_`. Renaming or moving a file changes its public URL.
 
 ## Hugo implementation
 
-- `layouts/shortcodes/file-tree.html` starts the listing at `static/files`.
-- `layouts/partials/file-tree.html` recursively calls itself for subdirectories.
-- `os.ReadDir` reads the source tree during the Hugo build.
+- `scripts/generate-file-pages.sh` creates ignored Hugo section pages from `static/files/` before each build.
+- `scripts/hugo.sh` runs the generator and then passes all arguments to Hugo; use it for local development and production builds.
+- `layouts/shortcodes/directory-browser.html` renders the listing for each generated directory page.
+- `layouts/partials/directory-browser.html` reads the current directory with `os.ReadDir`.
 - Links are built from the relative path and point to `/files/...`.
+- `disablePathToLower = true` preserves the case of directory URLs.
 - Any template change must keep the existing theme layout and accessible semantic HTML intact.
 
 ## Deployment
@@ -47,7 +49,7 @@ Cloudflare Pages settings:
 
 ```text
 Production branch: main
-Build command: hugo --gc --minify
+Build command: ./scripts/hugo.sh --gc --minify
 Build directory: public
 Environment variable: HUGO_VERSION=0.165.0
 ```
@@ -61,11 +63,13 @@ Do not configure `downloads.roran60.com` as the production custom domain on both
 Run the following before finishing a change:
 
 ```bash
-hugo build --gc --minify --cleanDestinationDir
+./scripts/hugo.sh build --gc --minify --cleanDestinationDir
 git diff --check
 ```
 
-When changing the file listing, also verify that a temporary file nested at least two directories below `static/files/` produces both:
+Use `./scripts/hugo.sh server` for local development so directory pages are regenerated before the server starts.
+
+When changing the directory browser, also verify that a temporary file nested at least two directories below `static/files/` produces both:
 
 ```text
 public/files/<same-path>

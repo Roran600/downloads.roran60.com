@@ -1,0 +1,58 @@
+<style type="text/css">
+  body {
+    font-size: 150%;
+    font-family: muli, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+  }
+
+  .file-breadcrumbs {
+    margin: 1rem 0;
+    overflow-wrap: anywhere;
+  }
+
+  .file-list {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  .file-list th,
+  .file-list td {
+    border-bottom: 1px solid #ccc;
+    padding: 0.55rem 0.75rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .file-list th:last-child,
+  .file-list td:last-child {
+    white-space: nowrap;
+  }
+
+  .directory-link {
+    font-weight: 700;
+  }
+
+  .parent-link {
+    font-weight: 400;
+  }
+
+  .visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  @media (max-width: 600px) {
+    body {
+      font-size: 115%;
+    }
+
+    .file-list th,
+    .file-list td {
+      padding: 0.45rem 0.35rem;
+    }
+  }
+</style>

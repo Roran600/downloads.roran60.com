@@ -3,6 +3,6 @@ title: "Downloads"
 description: "Súbory na stiahnutie"
 ---
 
-Súbory sú organizované do priečinkov. Kliknutím na názov sa súbor stiahne alebo otvorí v prehliadači podľa jeho typu.
+Súbory sú organizované do priečinkov. Otvorte prehliadač súborov a prechádzajte medzi adresármi.
 
-{{< file-tree >}}
+[Otvoriť prehliadač súborov](/files/)
