@@ -33,6 +33,16 @@ Do not create `index.md` files in download directories. Do not manually duplicat
 
 Prefer URL-friendly names using letters, numbers, `.`, `-`, and `_`. Renaming or moving a file changes its public URL.
 
+## Editing the homepage
+
+- The homepage source is `content/_index.md`.
+- `content/_index.md` is the only source file for editable homepage information; do not create a second homepage content file.
+- Edit its front matter and Markdown content to change homepage information, notices, links, or explanatory text.
+- Preview changes with `./scripts/hugo.sh server`.
+- Publish approved changes by committing and pushing `content/_index.md`.
+- Never edit generated pages under `content/files/` manually; the build wrapper recreates them from `static/files/`.
+- Do not add a CMS, database, login, or client-side editor for homepage editing; local Git-based editing is intentional.
+
 ## Hugo implementation
 
 - `scripts/generate-file-pages.sh` creates ignored Hugo section pages from `static/files/` before each build.

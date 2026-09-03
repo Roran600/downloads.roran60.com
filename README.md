@@ -17,6 +17,26 @@ themes/accessible-minimalism/      Theme Git submodule
 .github/workflows/hugo-pages.yml   GitHub Pages fallback deployment
 ```
 
+## Editing the homepage
+
+The homepage content is maintained in `content/_index.md`. Edit only that file to change the title, description, notices, links, or any other Markdown information shown on `/`. Do not edit generated files in `content/files/`.
+
+Preview the changes locally before publishing:
+
+```bash
+./scripts/hugo.sh server
+```
+
+After reviewing the page, commit and push the change:
+
+```bash
+git add content/_index.md
+git commit -m "Update homepage information"
+git push
+```
+
+The configured deployment then rebuilds the site and publishes the updated homepage. No CMS, database, login, or JavaScript editor is used.
+
 ## Adding files
 
 Put files anywhere below `static/files/`:
