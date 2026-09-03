@@ -1,0 +1,19 @@
+baseURL = "https://downloads.roran60.com/"
+defaultContentLanguage = "sk"
+title = "Downloads"
+theme = "accessible-minimalism"
+disableHugoGeneratorInject = true
+enableRobotsTXT = true
+
+[params]
+  description = "Súbory na stiahnutie"
+
+[languages.sk]
+  label = "Slovenčina"
+  locale = "sk"
+
+[menu]
+  [[menu.main]]
+    name = "Domov"
+    url = "/"
+    weight = 1

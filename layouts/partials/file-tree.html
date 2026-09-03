@@ -1,0 +1,27 @@
+{{- $root := .root -}}
+{{- $relative := .relative -}}
+
+{{- with os.ReadDir $root -}}
+<ul>
+  {{- range . -}}
+    {{- $name := .Name -}}
+    {{- if not (hasPrefix $name ".") -}}
+      {{- if .IsDir -}}
+        <li>
+          <strong>{{ $name }}/</strong>
+          {{ partial "file-tree.html" (dict
+            "root" (path.Join $root $name)
+            "relative" (path.Join $relative $name)
+          ) }}
+        </li>
+      {{- else -}}
+        {{- $filePath := path.Join "/files" $relative $name -}}
+        <li>
+          <a href="{{ $filePath | relURL }}">{{ $name }}</a>
+          <small>({{ .Size }} B)</small>
+        </li>
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+</ul>
+{{- end -}}
